@@ -1,3 +1,3 @@
 #! /bin/bash/
 echo "hello world"
-echo "2.0"
+echo "3.0"
