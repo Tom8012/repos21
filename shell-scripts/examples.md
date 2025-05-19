@@ -1,3 +1,13 @@
+✅ Summary Table
+Feature	Syntax Example
+Declare	var="value"
+Use	echo "$var"
+Arithmetic	sum=$((a + b))
+Loop	for var in ...; do ...; done
+Condition	if [ $var -eq 5 ]; then ...; fi
+Function	my_func() { ... }
+
+
  Here are several **shell script examples** commonly used in **DevOps workflows**, categorized by task. These scripts are useful for automation, system monitoring, deployment, and CI/CD pipelines.
 
 ---

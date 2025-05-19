@@ -9,7 +9,7 @@ then
 fi
 
 dnf list installed mysql
-
+/c/devops/daws-82/repos21/shell-scripts 
 if [ $? -ne 0 ]
 then # not installed
     dnf install mysql -y
