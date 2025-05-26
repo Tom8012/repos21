@@ -2,6 +2,9 @@
 - name: Only run if duration is 30
   hosts: localhost
   gather_facts: false
+ 
+  vars: 
+  duration: 30
 
   tasks:
     - name: Show string
