@@ -3,8 +3,11 @@
   hosts: localhost
   gather_facts: false
 
+  vars:
+    duration: 30
+
   tasks:
     - name: Show string
       debug:
         msg: "30-day course"
-  when: duration == 30
+      when: duration == 30  # ✅ Correct place
