@@ -3,8 +3,8 @@
   connection: local
   gather_facts: false
   vars_files:
-  - course.yaml
+    - course.yaml
   tasks:
-  - name: print the variable
-    ansible.builtin.debug:
-    msg: "Hello from {{ GREET }}"
+    - name: print the variable
+      ansible.builtin.debug:
+        msg: "Hello from {{ GREET }}"
