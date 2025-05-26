@@ -3,4 +3,4 @@
   tasks:
     - name: Show all gathered facts
       ansible.builtin.debug:
-        msg: ansible_facts
+        msg: "{{ ansible_facts }}"
