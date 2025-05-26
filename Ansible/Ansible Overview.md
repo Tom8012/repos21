@@ -1,5 +1,7 @@
 Ansible is an open-source **automation tool** primarily used for:
 
+https://medium.com/env0/mastering-ansible-variables-practical-guide-with-examples-0de631c34799 
+
 * **Configuration management**
 * **Application deployment**
 * **Task automation**
