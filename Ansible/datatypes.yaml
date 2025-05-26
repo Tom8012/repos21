@@ -1,0 +1,41 @@
+---
+- name: Show Ansible data types
+  hosts: localhost
+  gather_facts: false
+  vars:
+    course: "Ansible"
+    duration: 30
+    enabled: true
+    topics:
+      - YAML
+      - Variables
+      - Tasks
+    course_info:
+      name: "Ansible"
+      level: "Beginner"
+    not_set: null
+
+  tasks:
+    - name: Show string
+      debug:
+        msg: "Course: {{ course }}"
+
+    - name: Show integer
+      debug:
+        msg: "Duration: {{ duration }} days"
+
+    - name: Show boolean
+      debug:
+        msg: "Enabled? {{ enabled }}"
+
+    - name: Show list element
+      debug:
+        msg: "First topic: {{ topics[0] }}"
+
+    - name: Show dictionary value
+      debug:
+        msg: "Course level: {{ course_info.level }}"
+
+    - name: Check null
+      debug:
+        msg: "Null value: {{ not_set }}"
