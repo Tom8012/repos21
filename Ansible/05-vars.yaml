@@ -2,7 +2,8 @@
 - name: variables
   hosts: local
   connection: local
+  gather_facts: false
   tasks:
 - name: print the variables
-  ansible builtin.debug:
+  debug:
    msg: "Course ind evops with"
