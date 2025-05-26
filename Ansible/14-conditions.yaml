@@ -8,6 +8,6 @@
 
   tasks:
     - name: Show string
-      debug:
+      ansible.builtin.debug:
         msg: "30-day course"
       when: duration == 30  # ✅ Correct place
