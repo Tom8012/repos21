@@ -1,0 +1,4 @@
+- name: Run only if variable is true
+  debug:
+    msg: "This runs because it's enabled"
+  when: enabled
