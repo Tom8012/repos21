@@ -1,6 +1,7 @@
 - name: variables
   hosts: local
   connection: local
+  gather_facts: false
   vars: # PLAY level variables
     COURSE: "DevOps with AWS"
     DURATION: 120HRS
