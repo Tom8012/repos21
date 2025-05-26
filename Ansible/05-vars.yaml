@@ -3,7 +3,9 @@
   hosts: local
   connection: local
   gather_facts: false
+  vars:
+    course_name: "Course in DevOps with Ansible"
+
   tasks:
-- name: print the variables
-  debug:
-   msg: "Course ind evops with"
+    - name: print the course name
+      msg: "{{ course_name }}"
