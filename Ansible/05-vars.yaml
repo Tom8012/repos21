@@ -8,4 +8,5 @@
 
   tasks:
     - name: print the course name
+      debug:
       msg: "{{ course_name }}"
