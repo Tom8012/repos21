@@ -1,4 +1,10 @@
-- name: Run only if variable is true
-  debug:
-    msg: "This runs because it's enabled"
-  when: enabled
+---
+- name: Only run if duration is 30
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Show string
+      debug:
+        msg: "30-day course"
+  when: duration == 30
