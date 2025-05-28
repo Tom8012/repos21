@@ -16,9 +16,10 @@
         login_user: root
         login_password: ExpenseApp@1
         login_host: mysql.mjs15.site
-      register: mysql_info
+        register: mysql_info
 
-    - name: print the output
+    - name: Print the output
       ansible.builtin.debug:
-      msg: "MySql info: {{ mysql_info }}"
+        msg: "MySQL info: {{ mysql_info }}"
+
         
