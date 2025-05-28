@@ -1,0 +1,6 @@
+- name: Install Nginx
+  hosts: web
+  tasks:
+    - name: Show all gathered facts
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts }}"
