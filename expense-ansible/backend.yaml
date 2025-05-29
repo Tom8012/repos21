@@ -35,5 +35,5 @@
 
     - name: install dependencies
       community.general.npm:
-        src: /tmp/backend.zip
         path: /app
+        #state: present
