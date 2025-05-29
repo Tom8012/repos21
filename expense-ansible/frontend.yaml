@@ -39,6 +39,7 @@
     ansible.builtin.copy:
       src: expense.config
       dest: /etc/nginx/default.d/expense.config
+      remote_src: yes
 
   - name: restart nginx
     ansible.builtin.service:
