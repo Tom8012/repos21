@@ -47,12 +47,12 @@
 
     - name: install python libraries
       ansible.builtin.pip:
-        name: {{ item }}
+        name: "{{ item }}"
         executable: pip3.9
       loop:
       - cryptography
       - PyMySQL
-        
+
     - name: Import MySQL data
       community.mysql.mysql_db:
         state: import
