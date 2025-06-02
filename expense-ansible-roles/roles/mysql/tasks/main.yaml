@@ -3,8 +3,9 @@
   become: yes
   vars:
     mysql_root_password: ExpenseApp@1
+
   tasks:
-    - name: Install my libraries
+    - name: Install required Python libraries
       ansible.builtin.pip:
         name:
           - PyMySQL
@@ -15,23 +16,32 @@
       ansible.builtin.package:
         name: mysql-server
         state: present
-    - name: Start service httpd, if not started
+
+    - name: Start and enable MySQL service
       ansible.builtin.service:
         name: mysqld
         state: started
         enabled: yes
+
+    - name: Wait for MySQL socket
+      ansible.builtin.wait_for:
+        port: 3306
+        host: 127.0.0.1
+        timeout: 30
+
     - name: Get MySQL version with non-default credentials
       community.mysql.mysql_info:
         login_user: root
         login_password: "{{ mysql_root_password }}"
-        login_host: mysql.mjs15.site
+        login_host: 127.0.0.1
       register: mysql_info
       ignore_errors: true
 
-    - name: Print the output
+    - name: Print the MySQL info output
       ansible.builtin.debug:
         msg: "MySQL info: {{ mysql_info }}"
-    
-    - name: Setup root password
-      ansible.builtin.command: "mysql_secure_installation --set-root-pass {{ mysql_root_password }} "
+
+    - name: Setup root password if not already set
+      ansible.builtin.command: >
+        mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ mysql_root_password }}'; FLUSH PRIVILEGES;"
       when: mysql_info.failed is true
