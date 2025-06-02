@@ -1,64 +1,73 @@
-- name: disable current nodejs
+- name: Disable current Node.js module
   ansible.builtin.command: dnf module disable nodejs -y
+  become: true
 
-- name: enable nodejs 20
+- name: Enable Node.js 20 module
   ansible.builtin.command: dnf module enable nodejs:20 -y
+  become: true
 
-- name: install nodejs
+- name: Install Node.js and MySQL client
   ansible.builtin.package:
     name: "{{ item }}"
     state: present
   loop:
-  - nodejs
-  - mysql
+    - nodejs
+    - mysql
+  become: true
 
-- name: create expense user
+- name: Create 'expense' user
   ansible.builtin.user:
     name: expense
+    state: present
 
-- name: include from common role
-  # tags: 
-  # - deployment
+- name: Include common role
   include_role:
     name: common
     tasks_from: main
+  tags: 
+    - deployment
 
-# - name: create app directory
+# Optional: Uncomment these if not handled in the common role
+# - name: Create app directory
 #   ansible.builtin.file:
 #     path: /app
 #     state: directory
+#     owner: expense
+#     group: expense
+#     mode: '0755'
 
-# - name: download backend code
+# - name: Download backend code
 #   ansible.builtin.get_url:
 #     url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
 #     dest: /tmp/backend.zip
 
-# - name: unzip backend code
+# - name: Unzip backend code
 #   ansible.builtin.unarchive:
 #     src: /tmp/backend.zip
 #     dest: /app
 #     remote_src: yes
 
-- name: Install dependencies
-  tags: 
-  - deployment
+- name: Install backend Node.js dependencies
   community.general.npm:
     path: /app
+  tags:
+    - deployment
 
-- name: copy backend service
-  ansible.builtin.template: #it will search in templates folder
+- name: Copy backend systemd service
+  ansible.builtin.template:
     src: backend.service.j2
     dest: /etc/systemd/system/backend.service
+  notify: Restart backend service
 
-- name: install python libs
+- name: Install required Python packages
   ansible.builtin.pip:
     name: "{{ item }}"
     executable: pip3.9
   loop:
-  - cryptography
-  - PyMySQL
+    - cryptography
+    - PyMySQL
 
-- name: import mysql data
+- name: Import MySQL schema
   community.mysql.mysql_db:
     state: import
     name: all
@@ -67,11 +76,19 @@
     login_host: "{{ MYSQL_HOST }}"
     target: /app/schema/backend.sql
 
-- name: daemon reload and restart service
-  tags: 
-  - deployment
-  ansible.builtin.systemd_service:
+- name: Reload systemd and restart backend service
+  ansible.builtin.systemd:
+    name: backend
     enabled: true
     state: restarted
     daemon_reload: true
-    name: backend
+  tags:
+    - deployment
+
+# Handler (optional, for more modular roles/playbooks)
+# handlers:
+#   - name: Restart backend service
+#     ansible.builtin.systemd:
+#       name: backend
+#       state: restarted
+#       daemon_reload: true
