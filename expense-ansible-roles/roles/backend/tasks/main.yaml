@@ -19,13 +19,14 @@
   ansible.builtin.user:
     name: expense
     state: present
-
+    
 - name: Include common role
   include_role:
-   name: common
-   tasks_from: main
+    name: common
+    tasks_from: main
   tags: 
-   - deployment
+    - deployment
+
 
 #Optional: Uncomment these if not handled in the common role
 - name: Create app directory
