@@ -1,0 +1,5 @@
+- name: config
+  hosts: mysql
+  becomes: yes
+  roles:
+  - mysql
